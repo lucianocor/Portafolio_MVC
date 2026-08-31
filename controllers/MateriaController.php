@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../models/Materia.php';
 
 class MateriaController {
     private $model;
@@ -9,12 +10,19 @@ class MateriaController {
         $this->model = new Materia($conn);
     }
 
-    // 1. CARGA LA VISTA VISUAL (HTML)
+    // Helper de autorización
+    private function requireAdmin() {
+        if (!isset($_SESSION['usuario_rol']) || $_SESSION['usuario_rol'] !== 'admin') {
+            http_response_code(403);
+            echo json_encode(['error' => 'Acceso denegado: se requieren permisos de administrador']);
+            exit;
+        }
+    }
+
     public function index() {
         require_once __DIR__ . '/../views/materias/index.php';
     }
 
-    // 2. DEVUELVE EL JSON PARA JAVASCRIPT
     public function listarJson() {
         header('Content-Type: application/json; charset=utf-8');
         $resultado = $this->model->getAll();
@@ -23,10 +31,12 @@ class MateriaController {
             $materias[] = $fila;
         }
         echo json_encode($materias);
+        exit;
     }
 
-    // 3. CREAR
     public function store() {
+        $this->requireAdmin(); // Protegido
+
         header('Content-Type: application/json; charset=utf-8');
         $nombre = trim($_POST['nombre'] ?? '');
         $estado = trim($_POST['estado'] ?? 'Cursando');
@@ -39,16 +49,13 @@ class MateriaController {
         }
 
         $id = $this->model->create($nombre, $estado, $anio);
-        if ($id) {
-            echo json_encode(['success' => true]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al guardar']);
-        }
+        echo json_encode($id ? ['success' => true] : ['error' => 'Error al guardar']);
+        exit;
     }
 
-    // 4. ACTUALIZAR
     public function update() {
+        $this->requireAdmin(); // Protegido
+
         header('Content-Type: application/json; charset=utf-8');
         $id     = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
         $nombre = trim($_POST['nombre'] ?? '');
@@ -61,18 +68,16 @@ class MateriaController {
             exit;
         }
 
-        if ($this->model->update($id, $nombre, $estado, $anio)) {
-            echo json_encode(['success' => true]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al actualizar']);
-        }
+        $ok = $this->model->update($id, $nombre, $estado, $anio);
+        echo json_encode($ok ? ['success' => true] : ['error' => 'Error al actualizar']);
+        exit;
     }
 
-    // 5. ELIMINAR
     public function delete() {
+        $this->requireAdmin(); // Protegido
+
         header('Content-Type: application/json; charset=utf-8');
-        $id = filter_var($_POST['id'] ?? $_GET['id'] ?? null, FILTER_VALIDATE_INT);
+        $id = filter_var($_POST['id']  ?? null, FILTER_VALIDATE_INT);
 
         if (!$id) {
             http_response_code(400);
@@ -80,11 +85,9 @@ class MateriaController {
             exit;
         }
 
-        if ($this->model->delete($id)) {
-            echo json_encode(['success' => true]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al eliminar']);
-        }
+        $ok = $this->model->delete($id);
+        echo json_encode($ok ? ['success' => true] : ['error' => 'Error al eliminar']);
+        exit;
     }
 }
+?>

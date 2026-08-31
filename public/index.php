@@ -1,32 +1,48 @@
 <?php
+session_start();
+
 require_once __DIR__ . '/../controllers/MateriaController.php';
-require_once __DIR__ . '/../models/Materia.php';
-$controller = new MateriaController();
-$action     = $_GET['action'] ?? 'index';
+require_once __DIR__ . '/../controllers/AuthController.php';
+
+$materiaController = new MateriaController();
+$authController    = new AuthController();
+
+$action = $_GET['action'] ?? 'index';
 
 switch ($action) {
     case 'index':
-        // Carga la página visual del portafolio (HTML)
-        $controller->index();
+        $materiaController->index();
         break;
 
     case 'listar_json':
-        // Devuelve las materias en JSON para materias.js
-        $controller->listarJson();
+        $materiaController->listarJson();
         break;
 
     case 'store':
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Método no permitido");
-        $controller->store();
+        $materiaController->store();
         break;
 
     case 'update':
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Método no permitido");
-        $controller->update();
+        $materiaController->update();
         break;
 
-    case 'delete':
-        $controller->delete();
+   case 'delete':
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Método no permitido");
+        $materiaController->delete();
+        break;
+
+    case 'login':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $authController->login();
+        } else {
+            $authController->showLogin();
+        }
+        break;
+
+    case 'logout':
+        $authController->logout();
         break;
 
     default:

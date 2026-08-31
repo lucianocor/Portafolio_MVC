@@ -12,15 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   cargarMaterias();
 
-  // 1. Manejo del Submit (Crear o Editar apuntando al Router)
+  // 1. Manejo del Submit (Crear o Editar)
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Evita que la página se recargue
 
     const formData = new FormData(form);
     const esEdicion = inputId.value !== '';
-    
-    // Apuntamos a la acción correspondiente del Router
-    const url = esEdicion ? 'index.php?action=update' : 'index.php?action=store';[cite: 1]
+    const url = esEdicion ? 'index.php?action=update' : 'index.php?action=store';
 
     try {
       const res = await fetch(url, {
@@ -39,11 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 2. Evento del botón Cancelar
-  btnCancelar.addEventListener('click', () => {
-    resetearFormulario();
-  });
+  if (btnCancelar) {
+    btnCancelar.addEventListener('click', () => {
+      resetearFormulario();
+    });
+  }
 
-  // 3. Cargar y renderizar registros desde el Router
+  // 3. Consultar y renderizar materias
   async function cargarMaterias() {
     try {
       const res = await fetch('index.php?action=listar_json');
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 4. Activar modo edición
+  // 4. Pasar datos al formulario para editar
   window.cargarParaEditar = function (id) {
     const materia = listaLocalMaterias.find(m => parseInt(m.MateriaId) === id);
     if (!materia) return;
@@ -93,11 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuardar.classList.remove('btn-azul');
     btnGuardar.classList.add('btn-amarillo');
 
-    btnCancelar.style.display = 'inline-flex';
+    if (btnCancelar) btnCancelar.style.display = 'inline-flex';
     inputNombre.focus();
   };
 
-  // 5. Eliminar registro apuntando al Router
+  // 5. Eliminar registro
   window.eliminarMateria = async function (id) {
     if (!confirm('¿Seguro que querés eliminar esta materia?')) return;
 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('index.php?action=delete', {
         method: 'POST',
         body: formData
-      });[cite: 1]
+      });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error al eliminar');
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnGuardar.textContent = 'Guardar';
     btnGuardar.classList.remove('btn-amarillo');
     btnGuardar.classList.add('btn-azul');
-    btnCancelar.style.display = 'none';
+    if (btnCancelar) btnCancelar.style.display = 'none';
   }
 
   function obtenerClaseBadge(estado) {

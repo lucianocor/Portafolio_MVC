@@ -22,7 +22,7 @@
   <div class="columna-tarjeta">
     <div class="tarjeta-perfil">
       <div class="marco-foto">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQs09tiaOM48WVK36QbHwDYng7su-XoNeIfRA&s" class="foto" alt="Foto de perfil">
+        <img src="img/perfil2.jpg" class="foto" alt="Foto de perfil">
       </div>
     </div>
   </div>
