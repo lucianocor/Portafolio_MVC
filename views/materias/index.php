@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
-<!-- SECCIÓN INICIO (HERO) -->
+
 <section id="inicio" class="seccion-hero">
   <div> 
     <h1 class="titulo-principal">
@@ -14,21 +14,21 @@
 
     <div class="grupo-botones">
       <a href="#proyectos" class="btn-azul">Ver Proyectos</a>
-      <a href="https://github.com/tu-usuario" target="_blank" class="btn-borde">GitHub</a>
-      <a href="mailto:tuemail@ejemplo.com" class="btn-borde">Email</a>
+      <a href="https://github.com/lucianocor" target="_blank" class="btn-borde">GitHub</a>
+      <a href="luboss369@gmail.com" class="btn-borde">Email</a>
     </div>
   </div>
 
   <div class="columna-tarjeta">
     <div class="tarjeta-perfil">
       <div class="marco-foto">
-        <img src="img/perfil2.jpg" class="foto" alt="Foto de perfil">
+        <img src="img/perfil.jpg" class="foto" alt="Foto de perfil">
       </div>
     </div>
   </div>
 </section>
 
-<!-- SECCIÓN MATERIAS (CRUD) -->
+
 <section id="materias" class="seccion-materias">
   <div class="encabezado-seccion">
     <h2>Seguimiento de Materias</h2>
@@ -76,55 +76,18 @@
           </tr>
         </thead>
         <tbody id="lista-materias">
-          <!-- Inyectado por JS o PHP -->
+        
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- SECCIÓN PROYECTOS -->
-<section id="proyectos" class="seccion-proyectos">
-  <div class="encabezado-seccion">
-    <h2>Proyectos Destacados</h2>
-    <p>Trabajos y aplicaciones desarrolladas</p>
-  </div>
 
-  <div class="grilla-proyectos">
-    <div class="tarjeta-proyecto">
-      <div class="foto-proyecto">
-        <span class="etiqueta-proyecto">Web</span>
-      </div>
-      <div class="info-proyecto">
-        <h3>Panel de Control</h3>
-        <p>Aplicación web con filtros, formularios y persistencia de datos.</p>
-        <div class="tecnologias">
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>JavaScript</span>
-        </div>
-      </div>
-    </div>
 
-    <div class="tarjeta-proyecto">
-      <div class="foto-proyecto">
-        <span class="etiqueta-proyecto">Backend</span>
-      </div>
-      <div class="info-proyecto">
-        <h3>Analizador de Datos</h3>
-        <p>Programa en consola para procesar archivos y extraer métricas.</p>
-        <div class="tecnologias">
-          <span>Java</span>
-          <span>Lógica</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- SECCIÓN CONTACTO -->
 <section id="formulario">
-  <form action="email.php" method="POST">
+  <form action="index.php?action=contacto_enviar" method="POST">
     <h1>Formulario de contacto</h1>
     <div class="form_input">
       <label>Nombre</label>

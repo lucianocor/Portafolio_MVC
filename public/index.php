@@ -3,7 +3,9 @@ session_start();
 
 require_once __DIR__ . '/../controllers/MateriaController.php';
 require_once __DIR__ . '/../controllers/AuthController.php';
+require_once __DIR__ . '/../controllers/ContactoController.php';
 
+$contactoController = new ContactoController();
 $materiaController = new MateriaController();
 $authController    = new AuthController();
 
@@ -44,6 +46,10 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
+
+    case 'contacto_enviar':
+    $contactoController->enviar();
+    break;
 
     default:
         http_response_code(404);

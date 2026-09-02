@@ -10,7 +10,7 @@ class MateriaController {
         $this->model = new Materia($conn);
     }
 
-    // Helper de autorización
+    
     private function requireAdmin() {
         if (!isset($_SESSION['usuario_rol']) || $_SESSION['usuario_rol'] !== 'admin') {
             http_response_code(403);
@@ -35,7 +35,8 @@ class MateriaController {
     }
 
     public function store() {
-        $this->requireAdmin(); // Protegido
+        $this->requireAdmin(); 
+        // Protegido
 
         header('Content-Type: application/json; charset=utf-8');
         $nombre = trim($_POST['nombre'] ?? '');

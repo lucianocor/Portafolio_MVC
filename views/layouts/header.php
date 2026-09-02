@@ -25,7 +25,7 @@
       <a href="index.php#materias" class="enlace">Materias</a>
       <a href="index.php#formulario" class="btn-contacto">Contacto</a>
 
-      <!-- Si está autenticado muestra Cerrar Sesión, si no muestra Login -->
+      
       <?php if (isset($_SESSION['usuario_id'])): ?>
         <span style="font-size: 13px; color: #00e5ff;">(<?= htmlspecialchars($_SESSION['usuario_nombre']) ?>)</span>
         <a href="index.php?action=logout" class="btn-borde" style="border-color: #ef4444; color: #ef4444;">Salir</a>

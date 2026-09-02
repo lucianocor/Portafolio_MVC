@@ -11,14 +11,14 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.5;
 
-  /* Fondo cuadriculado sutil */
+  
   background-image: 
     linear-gradient(to right, #1a2747 1px, transparent 0.5px),
     linear-gradient(to bottom, #1a2744 0.5px, transparent 1px);
   background-size: 45px 35px;
 }
 
-/* Colores utilitarios rápidos */
+
 .color-cian {
   color: #00e5ff;
 }
@@ -27,9 +27,7 @@ body {
   color: #94a3b8;
 }
 
-/* =========================================
-   2. BARRA DE NAVEGACIÓN (SUPERIOR)
-   ========================================= */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -77,17 +75,15 @@ body {
   color: #00e5ff;
 }
 
-/*CONTENEDOR PRINCIPAL*/
+
 .contenedor {
   width: 90%;
-  max-width: 1100px; /* Ancho cómodo para escritorio */
+  max-width: 1100px; 
   margin: 0 auto;
   padding: 50px 50px;
 }
 
-/* =========================================
-   4. SECCIÓN HERO (INICIO)
-   ========================================= */
+
 .seccion-hero {
   display: flex;
   align-items: center;
@@ -112,7 +108,7 @@ body {
   max-width: 520px;
 }
 
-/* Botones */
+
 .grupo-botones {
   
   display: flex;
@@ -148,16 +144,14 @@ body {
   color: #00e5ff;
 }
 
-/* =========================================
-   5. TARJETA PERFIL (FOTO)
-   ========================================= */
+
 .columna-tarjeta {
   flex: 1;
 }
 
 .tarjeta-perfil {
   background-color: #111c35;
-  border: 1px solid #00e5ff; /* Borde cian sutil */
+  border: 1px solid #00e5ff; 
   border-radius: 12px;
   padding: 20px;
 }
@@ -175,92 +169,7 @@ body {
   object-fit: cover;
 }
 
-/* =========================================
-   6. SECCIÓN PROYECTOS
-   ========================================= */
-.seccion-proyectos {
-  padding: 50px 0;
-}
 
-.encabezado-seccion {
-  margin-bottom: 30px;
-}
-
-.encabezado-seccion h2 {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-.encabezado-seccion p {
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-.grilla-proyectos {
-  
- flex-wrap: wrap;
-  gap: 25px;
-  
-}
-
-.tarjeta-proyecto {
-  flex: 1;
-  background-color: #111c35;
-  border: 1px solid #1e293b;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.tarjeta-proyecto:hover {
-  border-color: #00e5ff;
-}
-
-.foto-proyecto {
-  height: 130px;
-  background-color: #152238;
-  padding: 10px;
-  display: flex;
-  align-items: flex-end;
-}
-
-.etiqueta-proyecto {
-  font-size: 11px;
-  background-color: #0b1120;
-  color: #00e5ff;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid #1e293b;
-}
-
-.info-proyecto {
-  padding: 15px;
-}
-
-.info-proyecto h3 {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
-.info-proyecto p {
-  font-size: 13px;
-  color: #94a3b8;
-  margin-bottom: 12px;
-}
-
-.tecnologias {
-  display: flex;
-  gap: 6px;
-}
-
-.tecnologias span {
-  font-size: 11px;
-  background-color: #0b1120;
-  border: 1px solid #1e293b;
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: #94a3b8;
-}
 form {
   background-color: #111c35;
  
@@ -312,9 +221,7 @@ details {
   color: #fff;
   font-size: 20px;
 }
-/* =========================================
-   8. SECCIÓN MATERIAS (CRUD)
-   ========================================= */
+
 .seccion-materias {
   padding: 50px 0;
   border-bottom: 1px solid #1e293b;
@@ -330,7 +237,7 @@ details {
   gap: 25px;
 }
 
-/* Formulario inline para carga rápida */
+
 .form-crud-materia {
   display: grid;
   grid-template-columns: 2fr 1.2fr 0.8fr auto;
@@ -367,7 +274,7 @@ details {
   height: 38px;
   outline: none;
 }
-/* 2. Anular el fondo blanco forzado del autocompletado de Chrome/Edge */
+
 .campo-crud input:-webkit-autofill,
 .campo-crud input:-webkit-autofill:hover, 
 .campo-crud input:-webkit-autofill:focus,
@@ -480,7 +387,7 @@ padding: 6px 10px;
   display: flex;
   gap: 8px;
 }
-/* Variante para el botón en modo edición */
+
 .btn-amarillo {
   background-color: #eab308;
   color: #0b1120;
@@ -493,38 +400,102 @@ padding: 6px 10px;
 .btn-amarillo:hover {
   background-color: #ca8a04;
 }
-/* Adaptación responsive */
-@media (max-width: 800px) {
-  .form-crud-materia {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+
+  /* Ajuste de márgenes globales para no estrangular el contenido */
+  .contenedor {
+    width: 95%;
+    padding: 30px 15px;
   }
-}
-/* =========================================
-   7. ADAPTACIÓN A PANTALLAS CHICAS
-   ========================================= */
-@media (max-width: 800px) {
+
+  /* Barra de navegación en columna */
   .navbar {
     flex-direction: column;
     gap: 15px;
     padding: 15px 20px;
+    text-align: center;
   }
 
+  .menu {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    font-size: 15px;
+  }
+
+  /* Sección Hero: pasa a columna (la foto queda abajo) */
   .seccion-hero {
     flex-direction: column;
     text-align: center;
-    gap: 30px;
+    gap: 35px;
+    padding: 30px 0 50px 0;
+  }
+
+  .titulo-principal {
+    font-size: 28px;
+  }
+
+  .descripcion {
+    font-size: 15px;
+    margin: 0 auto 25px auto;
   }
 
   .grupo-botones {
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
+  /* Tarjeta de la foto ajustada y centrada abajo */
   .columna-tarjeta {
     width: 100%;
-    max-width: 320px;
+    max-width: 280px;
+    margin: 0 auto;
+    /* order: 2 asegura que quede abajo aunque cambies el orden del HTML */
+    order: 2; 
   }
 
+  .marco-foto {
+    height: 220px;
+  }
+
+  /* Formulario CRUD: los 4 campos pasan a 1 sola columna vertical */
+  .form-crud-materia {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .botones-crud {
+    width: 100%;
+  }
+
+  .btn-crud {
+    width: 100%;
+  }
+
+  /* Corrección en la grilla de proyectos */
   .grilla-proyectos {
+    display: flex;
     flex-direction: column;
+  }
+}
+
+/* 2. Dispositivos extra pequeños (pantallas menores a 480px) */
+@media (max-width: 480px) {
+  .titulo-principal {
+    font-size: 24px;
+  }
+
+  .btn-azul, 
+  .btn-borde {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Tabla con scroll horizontal asegurado */
+  .tabla-materias th,
+  .tabla-materias td {
+    padding: 10px 8px;
+    font-size: 13px;
   }
 }
