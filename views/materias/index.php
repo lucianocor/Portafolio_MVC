@@ -15,7 +15,7 @@
     <div class="grupo-botones">
       <a href="#proyectos" class="btn-azul">Ver Proyectos</a>
       <a href="https://github.com/lucianocor" target="_blank" class="btn-borde">GitHub</a>
-      <a href="luboss369@gmail.com" class="btn-borde">Email</a>
+      <a href="mailto:luboss369@gmail.com" class="btn-borde">Email</a>
     </div>
   </div>
 
@@ -87,7 +87,7 @@
 
 
 <section id="formulario">
-  <form action="index.php?action=contacto_enviar" method="POST">
+  <form action="index.php?action=contacto_enviar" method="POST" class="card-formulario">
     <h1>Formulario de contacto</h1>
     <div class="form_input">
       <label>Nombre</label>

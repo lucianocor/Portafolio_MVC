@@ -1,148 +1,122 @@
+let listaMateriasGlobal = []; // Guarda las materias en memoria para no volver a pedirlas al editar
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form-materia');
-  const inputId = document.getElementById('id-materia');
-  const inputNombre = document.getElementById('nombre-materia');
-  const selectEstado = document.getElementById('estado-materia');
-  const inputAnio = document.getElementById('anio-materia');
-  const btnGuardar = document.getElementById('btn-guardar');
   const btnCancelar = document.getElementById('btn-cancelar');
-  const listaMaterias = document.getElementById('lista-materias');
 
-  let listaLocalMaterias = [];
-
+  // Carga la tabla al abrir la página
   cargarMaterias();
 
-  // 1. Manejo del Submit (Crear o Editar)
+  // 1. Guardar o Modificar materia
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault(); // Evita que la página recargue
 
-    const formData = new FormData(form);
-    const esEdicion = inputId.value !== '';
-    const url = esEdicion ? 'index.php?action=update' : 'index.php?action=store';
+    const id = document.getElementById('id-materia').value;
+    const url = id ? 'index.php?action=update' : 'index.php?action=store';
 
     try {
       const res = await fetch(url, {
         method: 'POST',
-        body: formData
+        body: new FormData(form) // Empaqueta todos los campos del form automáticamente
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al procesar la materia');
+      if (!res.ok) throw new Error(data.error || 'Error en el servidor');
 
       resetearFormulario();
-      cargarMaterias();
+      cargarMaterias(); // Refresca la tabla
     } catch (error) {
       alert(error.message);
     }
   });
 
-  // 2. Evento del botón Cancelar
+  // 2. Cancelar edición
   if (btnCancelar) {
-    btnCancelar.addEventListener('click', () => {
-      resetearFormulario();
-    });
-  }
-
-  // 3. Consultar y renderizar materias
-  async function cargarMaterias() {
-    try {
-      const res = await fetch('index.php?action=listar_json');
-      const materias = await res.json();
-      listaLocalMaterias = materias;
-
-      listaMaterias.innerHTML = '';
-
-      if (materias.length === 0) {
-        listaMaterias.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No hay materias cargadas</td></tr>';
-        return;
-      }
-
-      materias.forEach(materia => {
-        const badgeClass = obtenerClaseBadge(materia.Estado);
-        const tr = document.createElement('tr');
-        tr.id = `materia-${materia.MateriaId}`;
-
-        tr.innerHTML = `
-          <td>${escaparHTML(materia.NombreMateria)}</td>
-          <td><span class="badge ${badgeClass}">${materia.Estado}</span></td>
-          <td>${materia.Anio}° Año</td>
-          <td class="acciones-crud">
-            <button type="button" class="btn-accion btn-editar" onclick="cargarParaEditar(${materia.MateriaId})">Editar</button>
-            <button type="button" class="btn-accion btn-eliminar" onclick="eliminarMateria(${materia.MateriaId})">Eliminar</button>
-          </td>
-        `;
-
-        listaMaterias.appendChild(tr);
-      });
-    } catch (error) {
-      console.error('Error cargando materias:', error);
-    }
-  }
-
-  // 4. Pasar datos al formulario para editar
-  window.cargarParaEditar = function (id) {
-    const materia = listaLocalMaterias.find(m => parseInt(m.MateriaId) === id);
-    if (!materia) return;
-
-    inputId.value = materia.MateriaId;
-    inputNombre.value = materia.NombreMateria;
-    selectEstado.value = materia.Estado;
-    inputAnio.value = materia.Anio;
-
-    btnGuardar.textContent = 'Actualizar';
-    btnGuardar.classList.remove('btn-azul');
-    btnGuardar.classList.add('btn-amarillo');
-
-    if (btnCancelar) btnCancelar.style.display = 'inline-flex';
-    inputNombre.focus();
-  };
-
-  // 5. Eliminar registro
-  window.eliminarMateria = async function (id) {
-    if (!confirm('¿Seguro que querés eliminar esta materia?')) return;
-
-    const formData = new FormData();
-    formData.append('id', id);
-
-    try {
-      const res = await fetch('index.php?action=delete', {
-        method: 'POST',
-        body: formData
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al eliminar');
-
-      const fila = document.getElementById(`materia-${id}`);
-      if (fila) fila.remove();
-
-      if (inputId.value == id) resetearFormulario();
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  // 6. Resetear formulario
-  function resetearFormulario() {
-    form.reset();
-    inputId.value = '';
-    btnGuardar.textContent = 'Guardar';
-    btnGuardar.classList.remove('btn-amarillo');
-    btnGuardar.classList.add('btn-azul');
-    if (btnCancelar) btnCancelar.style.display = 'none';
-  }
-
-  function obtenerClaseBadge(estado) {
-    switch (estado) {
-      case 'Aprobada': return 'badge-aprobada';
-      case 'Regular': return 'badge-regular';
-      default: return 'badge-cursando';
-    }
-  }
-
-  function escaparHTML(texto) {
-    const div = document.createElement('div');
-    div.textContent = texto;
-    return div.innerHTML;
+    btnCancelar.addEventListener('click', resetearFormulario);
   }
 });
+
+// --- FUNCIONES CRUD (Accesibles globalmente para los onclick de la tabla) ---
+
+// 3. Consultar y pintar materias
+async function cargarMaterias() {
+  const contenedor = document.getElementById('lista-materias');
+
+  try {
+    const res = await fetch('index.php?action=listar_json');
+    listaMateriasGlobal = await res.json();
+
+    contenedor.innerHTML = '';
+
+    if (listaMateriasGlobal.length === 0) {
+      contenedor.innerHTML = '<tr><td colspan="4" style="text-align:center;">No hay materias</td></tr>';
+      return;
+    }
+
+    listaMateriasGlobal.forEach(m => {
+      contenedor.innerHTML += `
+        <tr id="materia-${m.MateriaId}">
+          <td>${m.NombreMateria}</td>
+          <td><span class="badge badge-${m.Estado.toLowerCase()}">${m.Estado}</span></td>
+          <td>${m.Anio}° Año</td>
+          <td class="acciones-crud">
+            <button type="button" class="btn-accion" onclick="cargarParaEditar(${m.MateriaId})">Editar</button>
+            <button type="button" class="btn-accion" onclick="eliminarMateria(${m.MateriaId})">Eliminar</button>
+          </td>
+        </tr>
+      `;
+    });
+  } catch (error) {
+    console.error('Error al cargar materias:', error);
+  }
+}
+
+// 4. Cargar datos en el formulario para editar
+function cargarParaEditar(id) {
+  const materia = listaMateriasGlobal.find(m => parseInt(m.MateriaId) === id);
+  if (!materia) return;
+
+  document.getElementById('id-materia').value = materia.MateriaId;
+  document.getElementById('nombre-materia').value = materia.NombreMateria;
+  document.getElementById('estado-materia').value = materia.Estado;
+  document.getElementById('anio-materia').value = materia.Anio;
+
+  document.getElementById('btn-guardar').textContent = 'Actualizar';
+  const btnCancelar = document.getElementById('btn-cancelar');
+  if (btnCancelar) btnCancelar.style.display = 'inline-flex';
+}
+
+// 5. Eliminar materia
+async function eliminarMateria(id) {
+  if (!confirm('¿Seguro que querés eliminar esta materia?')) return;
+
+  const datos = new FormData();
+  datos.append('id', id);
+
+  try {
+    const res = await fetch('index.php?action=delete', {
+      method: 'POST',
+      body: datos
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Error al eliminar');
+
+    // Quita la fila del DOM al instante
+    const fila = document.getElementById(`materia-${id}`);
+    if (fila) fila.remove();
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+// 6. Limpiar formulario
+function resetearFormulario() {
+  const form = document.getElementById('form-materia');
+  form.reset();
+  document.getElementById('id-materia').value = '';
+  document.getElementById('btn-guardar').textContent = 'Guardar';
+  
+  const btnCancelar = document.getElementById('btn-cancelar');
+  if (btnCancelar) btnCancelar.style.display = 'none';
+}
