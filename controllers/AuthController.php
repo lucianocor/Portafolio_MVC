@@ -26,7 +26,7 @@ class AuthController {
 
         $usuario = $this->userModel->findByEmail($email);
 
-        // Comprueba si existe el usuario y si el hash coincide
+        
         if ($usuario && password_verify($password, $usuario['password'])) {
             $_SESSION['usuario_id']     = $usuario['id'];
             $_SESSION['usuario_nombre'] = $usuario['nombreUser'];

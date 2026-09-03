@@ -1,15 +1,15 @@
-let listaMateriasGlobal = []; // Guarda las materias en memoria para no volver a pedirlas al editar
+let listaMateriasGlobal = []; 
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('form-materia');
   const btnCancelar = document.getElementById('btn-cancelar');
 
-  // Carga la tabla al abrir la página
+  
   cargarMaterias();
 
-  // 1. Guardar o Modificar materia
+  
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita que la página recargue
+    e.preventDefault(); 
 
     const id = document.getElementById('id-materia').value;
     const url = id ? 'index.php?action=update' : 'index.php?action=store';
@@ -17,28 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const res = await fetch(url, {
         method: 'POST',
-        body: new FormData(form) // Empaqueta todos los campos del form automáticamente
+        body: new FormData(form) 
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Error en el servidor');
 
       resetearFormulario();
-      cargarMaterias(); // Refresca la tabla
+      cargarMaterias(); 
     } catch (error) {
       alert(error.message);
     }
   });
 
-  // 2. Cancelar edición
+  
   if (btnCancelar) {
     btnCancelar.addEventListener('click', resetearFormulario);
   }
 });
 
-// --- FUNCIONES CRUD (Accesibles globalmente para los onclick de la tabla) ---
 
-// 3. Consultar y pintar materias
+
+
 async function cargarMaterias() {
   const contenedor = document.getElementById('lista-materias');
 
@@ -71,7 +71,7 @@ async function cargarMaterias() {
   }
 }
 
-// 4. Cargar datos en el formulario para editar
+
 function cargarParaEditar(id) {
   const materia = listaMateriasGlobal.find(m => parseInt(m.MateriaId) === id);
   if (!materia) return;
@@ -86,7 +86,7 @@ function cargarParaEditar(id) {
   if (btnCancelar) btnCancelar.style.display = 'inline-flex';
 }
 
-// 5. Eliminar materia
+
 async function eliminarMateria(id) {
   if (!confirm('¿Seguro que querés eliminar esta materia?')) return;
 
@@ -102,7 +102,7 @@ async function eliminarMateria(id) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Error al eliminar');
 
-    // Quita la fila del DOM al instante
+   
     const fila = document.getElementById(`materia-${id}`);
     if (fila) fila.remove();
   } catch (error) {
@@ -110,7 +110,7 @@ async function eliminarMateria(id) {
   }
 }
 
-// 6. Limpiar formulario
+
 function resetearFormulario() {
   const form = document.getElementById('form-materia');
   form.reset();

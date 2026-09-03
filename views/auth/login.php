@@ -1,7 +1,7 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <section class="seccion-login">
-  <!-- max-width y margin:auto garantizan que la tarjeta no supere los 400px y quede centrada -->
+  
   <div class="card-login" style=" width: 800px; margin: 40px auto;">
     <h2 class="login-titulo">Iniciar Sesión</h2>
     

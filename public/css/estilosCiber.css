@@ -66,7 +66,7 @@ body {
   padding: 40px 20px;
 }
 
-/* Sección Hero */
+/* Sección Perfil */
 .seccion-hero {
   display: flex;
   align-items: center;
@@ -223,7 +223,7 @@ body {
   justify-content: center;
 }
 
-/* Tabla */
+/* Seciion Tabla */
 .tabla-contenedor {
   width: 100%;
   overflow-x: auto;
@@ -429,7 +429,7 @@ summary {
   color: #00e5ff;
 }
 
-/* Responsividad */
+/* Responsive */
 @media (max-width: 768px) {
   .contenedor { padding: 30px 15px; }
   .navbar {

@@ -36,7 +36,7 @@ class MateriaController {
 
     public function store() {
         $this->requireAdmin(); 
-        // Protegido
+       
 
         header('Content-Type: application/json; charset=utf-8');
         $nombre = trim($_POST['nombre'] ?? '');
@@ -55,7 +55,7 @@ class MateriaController {
     }
 
     public function update() {
-        $this->requireAdmin(); // Protegido
+        $this->requireAdmin(); 
 
         header('Content-Type: application/json; charset=utf-8');
         $id     = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
@@ -75,7 +75,7 @@ class MateriaController {
     }
 
     public function delete() {
-        $this->requireAdmin(); // Protegido
+        $this->requireAdmin(); 
 
         header('Content-Type: application/json; charset=utf-8');
         $id = filter_var($_POST['id']  ?? null, FILTER_VALIDATE_INT);

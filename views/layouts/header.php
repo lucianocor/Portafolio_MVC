@@ -20,8 +20,6 @@
     
     <nav class="menu">
       <a href="index.php#inicio" class="enlace">Inicio</a>
-      <a href="index.php#proyectos" class="enlace">Proyectos</a>
-      <a href="index.php#habilidades" class="enlace">Habilidades</a>
       <a href="index.php#materias" class="enlace">Materias</a>
       <a href="index.php#formulario" class="btn-contacto">Contacto</a>
 

@@ -13,9 +13,9 @@
     </p>
 
     <div class="grupo-botones">
-      <a href="#proyectos" class="btn-azul">Ver Proyectos</a>
+      <!-- <a href="#proyectos" class="btn-azul">Ver Proyectos</a>  en proceso-->
       <a href="https://github.com/lucianocor" target="_blank" class="btn-borde">GitHub</a>
-      <a href="mailto:luboss369@gmail.com" class="btn-borde">Email</a>
+      <!-- <a href="mailto:luboss369@gmail.com" class="btn-borde">Email</a> -->
     </div>
   </div>
 
@@ -56,7 +56,7 @@
 
       <div class="campo-crud">
         <label for="anio-materia">Año</label>
-        <input type="number" id="anio-materia" name="anio" min="1" max="5" placeholder="Ej: 1° Año" required>
+        <input type="number" id="anio-materia" name="anio" min="1" max="3" placeholder="Ej: 1° Año" required>
       </div>
 
       <div class="botones-crud">
